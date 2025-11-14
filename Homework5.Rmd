@@ -329,7 +329,7 @@ git push origin main
 **Docker Hub Username:**
 
 <!-- Your username here -->
-
+sean2418
 
 **b)** (4 points) Tag your image appropriately and push it to Docker Hub. What commands did you use?
 
@@ -337,10 +337,8 @@ git push origin main
 
 ```bash
 # Commands you used
-
-
-
-
+docker login 
+docker tag stor674-hw5:latest sean2418/stor674-hw5:v1
 ```
 
 **c)** (3 points) Provide the full Docker Hub image URL/name that others can use to pull your image.
@@ -349,7 +347,7 @@ git push origin main
 
 ```
 # Format: username/imagename:tag
-
+sean2418/stor674-hw5:v1
 ```
 
 ---
@@ -365,6 +363,7 @@ In this section, you will download your Docker image using Apptainer on UNC's Lo
 **Answer:**
 
 <!-- Write your answer here -->
+Apptainer is an open source container platform designed for high performance computing. It is used for HPC systems instead of Docker because Apptainer does not require root privileges so it is more secure. Apptainer also have immutable containers for signatures and provides single-file format easy for sharing. 
 
 
 **b)** (2 points) What does "Bring Your Own Environment" (BYOE) mean in the context of HPC and containers?
@@ -372,7 +371,7 @@ In this section, you will download your Docker image using Apptainer on UNC's Lo
 **Answer:**
 
 <!-- Write your answer here -->
-
+BYOE means to create custom environments independent of the host system, like the operating system and the packages along with their specific versions to HPC, which will allow their code to run exactly as they did on the local machine. This allows for easier access and maintenance of reproducibility. 
 
 ## Question 3.2: Convert Docker Image to Apptainer (10 points)
 
@@ -382,8 +381,8 @@ In this section, you will download your Docker image using Apptainer on UNC's Lo
 
 ```bash
 # Command to pull/convert Docker image to Apptainer
-
-
+module load apptainer
+apptainer pull docker://sean2418/stor674-hw5:v1
 ```
 
 **b)** (3 points) What is the name of the Apptainer image file (.sif) that was created?
@@ -392,7 +391,7 @@ In this section, you will download your Docker image using Apptainer on UNC's Lo
 
 ```
 # Filename here
-
+stor674-hw5_v1.sif
 ```
 
 **c)** (2 points) Test your Apptainer image interactively. What command did you use to run it?
@@ -402,7 +401,7 @@ In this section, you will download your Docker image using Apptainer on UNC's Lo
 ```bash
 # Command to run Apptainer image
 
-
+apptainer run stor674-hw5_v1.sif
 ```
 
 ## Question 3.3: Create Slurm Job Script (12 points)
@@ -428,12 +427,16 @@ Create a Slurm job script that runs your containerized `compute_bench.py` using 
 
 # Paste your Slurm script here
 
+#!/bin/bash
+#SBATCH -p gpu
+#SBATCH --job-name=hw5-bench
+#SBATCH --gres=gpu:1
+#SBATCH -t 00:10:00
+#SBATCH --mem=8G
+#SBATCH --output=slurm-%j.out
 
-
-
-
-
-
+module load apptainer
+apptainer run --nv stor674-hw5_v1.sif
 
 
 ```
