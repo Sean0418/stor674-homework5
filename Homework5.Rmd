@@ -428,16 +428,18 @@ Create a Slurm job script that runs your containerized `compute_bench.py` using 
 # Paste your Slurm script here
 
 #!/bin/bash
-#SBATCH -p gpu
-#SBATCH --job-name=hw5-bench
+#SBATCH -N 1
+#SBATCH --mem=5g
+#SBATCH -n 1
+#SBATCH -t 01-00:00:00
+#SBATCH -p l40-gpu
+#SBATCH --qos=gpu_access
 #SBATCH --gres=gpu:1
-#SBATCH -t 00:10:00
-#SBATCH --mem=8G
-#SBATCH --output=slurm-%j.out
+#SBATCH --output=out.%j
+#SBATCH --error=err.%j
 
 module load apptainer
 apptainer run --nv stor674-hw5_v1.sif
-
 
 ```
 
@@ -464,12 +466,21 @@ sbatch run_compute_bench.sh
 ```
 # Paste your job output here
 
+GPU available: NVIDIA A100-SXM4-40GB
 
+CPU Computations:
+Time for 10,000,000 elements: 0.3325 seconds
+Time for 100,000,000 elements: 2.0886 seconds
 
+GPU Computations:
+Time for 10,000,000 elements: 0.0022 seconds
+Time for 100,000,000 elements: 0.0198 seconds
 
+Small sample of 10 random numbers:
+tensor([-0.1326, -1.5500,  1.1859,  1.5597,  0.7008, -0.4011, -1.1648,  0.1153,
+        -0.3273, -0.3363])
 
-
-
+Saved data to mydata.pt
 
 ```
 
