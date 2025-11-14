@@ -454,7 +454,7 @@ apptainer run --nv stor674-hw5_v1.sif
 
 ```bash
 # Command here
-
+sbatch run_compute_bench.sh
 ```
 
 **b)** (2 points) Provide the output of your job. Paste the contents of your Slurm output file (e.g., `slurm-jobid.out`). Also, add your Slurm script (`run_compute_bench.sh`) to your GitHub repository and push it.
@@ -477,6 +477,15 @@ apptainer run --nv stor674-hw5_v1.sif
 
 **c)** (BONUS: +2 points) Include a screenshot showing your job in the Slurm queue or completed job information using `squeue` or `sacct`. Also show that your job successfully utilized a GPU (if you requested one).
 
+```{r my-image-chunk, echo=FALSE, fig.cap="A screenshot of my job in the Slurm queue.", out.width="80%", fig.align="center"}
+knitr::include_graphics("media/hw5-3.4-c.png")
+```
+
+```{r my-image-chunk, echo=FALSE, fig.cap="A screenshot of my job in the Slurm queue.", out.width="80%", fig.align="center"}
+knitr::include_graphics("media/hw5-3.4-c2.png")
+```
+
+
 ---
 
 # Part 4: Reflection and Best Practices (Optional - Extra Credit: 5 points)
@@ -486,7 +495,7 @@ apptainer run --nv stor674-hw5_v1.sif
 **Answer:**
 
 <!-- Write your answer here -->
-
+This process eliminates the problem that the code only worked on my machine. Any researcher can pull the Git repository, build the same Docker image, and get the same results easily. The advantages are that it guarantees the same dependencies are used every time. The container can be ran anywhere HPC and local laptop alike. This approach also allows isolation of the environments so it doesn't interfere with other local environment and other user's environment. The potential challenges are the learning curve to use all of this technologies. The images.containers can also take up with a bit of space. 
 
 ---
 
